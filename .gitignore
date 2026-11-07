@@ -1,0 +1,8 @@
+node_modules/
+desktop-dist/
+release/
+.desktop-package/
+.env*
+*.log
+*.tsbuildinfo
+.DS_Store

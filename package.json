@@ -1,0 +1,41 @@
+{
+  "name": "mayor-of-chaos",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Мэрия случайностей — автономный симулятор абсурдного города",
+  "author": "syslavka",
+  "type": "module",
+  "main": "desktop/main.cjs",
+  "engines": {
+    "node": ">=22.13.0"
+  },
+  "scripts": {
+    "start": "electron .",
+    "dev": "npm run desktop:renderer && npm start",
+    "build": "node scripts/build-desktop.mjs",
+    "desktop:build": "node scripts/build-desktop.mjs",
+    "desktop:renderer": "node scripts/build-desktop.mjs --renderer-only",
+    "desktop:start": "electron .",
+    "check": "tsc --noEmit",
+    "test": "node scripts/check-simulation.mjs",
+    "check:simulation": "node scripts/check-simulation.mjs"
+  },
+  "dependencies": {
+    "react": "19.2.6",
+    "react-dom": "19.2.6",
+    "lucide-react": "^1.31.0"
+  },
+  "devDependencies": {
+    "@fontsource-variable/golos-text": "^5.3.0",
+    "@tailwindcss/postcss": "4.2.1",
+    "@types/node": "22.19.19",
+    "@types/react": "19.2.14",
+    "@types/react-dom": "19.2.3",
+    "@vitejs/plugin-react": "6.0.2",
+    "electron": "^45.2.3",
+    "electron-builder": "^26.18.0",
+    "tailwindcss": "4.2.1",
+    "typescript": "5.9.3",
+    "sharp": "^0.35.4"
+  }
+}
