@@ -1,0 +1,30 @@
+import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+import ts from 'typescript';
+const source=ts.transpileModule(readFileSync(new URL('../lib/simulation.ts',import.meta.url),'utf8'),{compilerOptions:{module:ts.ModuleKind.ES2022,target:ts.ScriptTarget.ES2022}}).outputText;
+const {createCity,advance,intervene,validCity}=await import('data:text/javascript;base64,'+Buffer.from(source).toString('base64'));
+const original=createCity('Кот сел на роутер');
+assert.equal(original.symbol,'КОТ');
+assert.deepEqual(advance({...original,paused:true},600),{...original,paused:true});
+const deny=intervene(original,'deny'),evidence=intervene(original,'evidence'),blame=intervene(original,'blame');
+assert.ok(deny.chaos<original.chaos&&deny.trust>original.trust&&deny.cult>original.cult);
+assert.ok(evidence.chaos>original.chaos&&evidence.trust<original.trust);
+assert.ok(blame.districts[0]<original.districts[0]&&blame.districts[1]>original.districts[1]);
+let city=original;
+for(let second=0;second<600;second++){
+ if(second%47===0)city=intervene(city,['deny','evidence','blame'][Math.floor(second/47)%3]);
+ city=advance(city);
+ assert.ok(validCity(city));
+ assert.ok([city.chaos,city.trust,...city.districts].every(v=>v>=0&&v<=100));
+}
+assert.equal(city.step,50);
+assert.equal(city.seconds,600);
+assert.equal(city.decisions.deny+city.decisions.evidence+city.decisions.blame,13);
+assert.ok(city.news.some(n=>n.title.includes('независимость')));
+assert.ok(city.news.some(n=>n.body.includes('Подброш')||n.body.includes('печать канцелярии')));
+assert.equal(new Set(city.news.map(n=>n.id)).size,city.news.length);
+assert.ok(validCity(JSON.parse(JSON.stringify(city))));
+assert.equal(validCity({event:'сломано'}),false);
+assert.equal(original.news.length,3);
+assert.deepEqual(advance(original,600),Array.from({length:600}).reduce(c=>advance(c),original));
+console.log('Simulation checks passed: 10 minutes, 50 events, 13 decisions, pause, persistence, causal branches, bounds and immutable state.');
