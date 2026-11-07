@@ -1,0 +1,13 @@
+{
+  "appId":"ru.mayor.chaos",
+  "productName":"Мэрия случайностей",
+  "executableName":"MayorOfChaos",
+  "asar":true,
+  "directories":{"output":"release","buildResources":"desktop"},
+  "files":["desktop/main.cjs","desktop/preload.cjs","desktop/icon.png","desktop/icon.ico","desktop-dist/**/*","package.json"],
+  "extraMetadata":{"main":"desktop/main.cjs","name":"mayor-of-chaos","version":"1.0.0","description":"Мэрия случайностей — симулятор абсурдного города","author":"Mayor of Chaos"},
+  "win":{"target":[{"target":"portable","arch":["x64"]}],"icon":"desktop/icon.ico","signExecutable":false},
+  "portable":{"artifactName":"MayorOfChaos-1.0.0.exe","requestExecutionLevel":"user"},
+  "publish":null,
+  "npmRebuild":false
+}
